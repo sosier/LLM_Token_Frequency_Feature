@@ -23,6 +23,7 @@ I use [Olah et al.'s](https://distill.pub/2020/circuits/zoom-in/#claim-1) defini
  2. Load the model's tokenizer
  3. Tokenize the dataset and count the frequency of each token in the tokenizer's vocabulary. The end result should be a vector of length $V$ (the size of the vocabulary) with the counts ordered by token ID
  4. (Optional) Because steps 1-3 can be slow, save the resulting counts somewhere for future use
+    - Saved counts for the models studied can be found [here](token_counts/)
  5. Load the embedding to be analyzed. This should be a matrix of size $V \times D$ where $D$ is the dimensionality of the embedding
     - Note: It may be necessary to transpose the matrix if it's an unembedding and is of shape $D \times V$
  6. Calculate all $D$ [principal components](https://en.wikipedia.org/wiki/Principal_component_analysis) of the embedding matrix
@@ -31,7 +32,7 @@ I use [Olah et al.'s](https://distill.pub/2020/circuits/zoom-in/#claim-1) defini
  8. Run a linear probe on each column of the `PC_matrix` separately, regressing the principal component values vs. $\log_{10}(\text{token\_count} + 1)$ for each token. While performing each regression, evaluate the p-value of that principal component and keep a list of all principal components with a p-value $< \frac{0.05}{D}$
     - $\frac{0.05}{D} = $ the standard 0.05 statistical significance cutoff after applying a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) to account for the sheer number of linear probes run
     - If p-value $< \frac{0.05}{D}$ is too strict, you may consider relaxing this cutoff, but this cutoff generally works well  
- 9. Run one final linear probe now using all the principal components kept during step 8 vs. $\log_{10}(\text{token\_count} + 1)$ and save the final regression weights for each
+ 9.  Run one final linear probe now using all the principal components kept during step 8 vs. $\log_{10}(\text{token\_count} + 1)$ and save the final regression weights for each
  10. Finally, if you want the actual feature vector, you can simply calculate a weighted sum the principal components from step 6 using the weights from step 9 and (optionally) normalize
 
 Code for this process can be found here: [COMING SOON]()
