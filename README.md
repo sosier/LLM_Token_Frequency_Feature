@@ -30,24 +30,22 @@ I use [Olah et al.'s](https://distill.pub/2020/circuits/zoom-in/#claim-1) defini
  7. Using the principal components, project the matrix into its principal component form. We'll call this resulting matrix the `PC_matrix`. It will also be of size $V \times D$
     - Note: We're not doing any dimensionality reduction, just rotating the axes
  8. Run a linear probe on each column of the `PC_matrix` separately, regressing the principal component values vs. $\log_{10}(\text{token\\_count} + 1)$ for each token. While performing each regression, evaluate the p-value of that principal component and keep a list of all principal components with a p-value $\leq \frac{0.05}{D}$
-    - Note: $\frac{0.05}{D} = $ the standard 0.05 statistical significance cutoff after applying a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) to account for the sheer number of linear probes run
+    - Note: $\frac{0.05}{D}$ = the standard 0.05 statistical significance cutoff after applying a [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) to account for the sheer number of linear probes run
     - If p-value $\leq \frac{0.05}{D}$ is too strict, you may consider relaxing this cutoff, but this cutoff generally works well  
  9.  Run one final linear probe now using all the principal components kept during step 8 vs. $\log_{10}(\text{token\\_count} + 1)$ and save the final regression weights for each
- 10. Finally, if you want the actual feature vector, you can simply calculate a weighted sum the principal components from step 6 using the weights from step 9 and (optionally) normalize
+ 10. Finally, to get the actual feature vector, you can simply calculate a weighted sum of the principal components using the weights from step 9 and (optionally) normalize
 
-Code for this process can be found [here](https://github.com/sosier/LLM_Token_Frequency_Feature/blob/main/find_feature.py#L191).
-
-The final feature vectors for all models studied can be found [here](feature_vectors/).
+Code for this process can be found [here](https://github.com/sosier/LLM_Token_Frequency_Feature/blob/main/find_feature.py#L191), and the final feature vectors for all the models I studied can be found [here](feature_vectors/).
 
 ## Results
 
 I was able to find the feature in 20 different models: 18 popular open source LLMs and their variants plus two smaller, GPT-style models trained on a fully known training dataset for validation. This includes a variety of different model sizes (from 10M to 70B parameters), both base models and instruction tuned models, and even code models. The results are summarized in the table below:
 
-<img alt="Results Table" src="img/results_table.png" style="max-width:800px;"/>
+<img alt="Results Table" src="img/results_table.png" style="width: 800px;"/>
 
-You'll notice the feature correlates very strongly with the log token frequency (typically ~0.9). For visualization purposes, here's what that looks like for one specific model (GPT 2 - Small) on a scatter plot. (Scatter plots for all other models plus code to replicate the results can be found [here](Find_Token_Frequency_Feature.ipynb).)
+You'll notice the feature correlates very strongly with the log token frequency (typically ~0.9). To visualize this, here's a scatter plot for one specific model (GPT 2 - Small). (Scatter plots for all other models, plus code to replicate the results can be found [here](Find_Token_Frequency_Feature.ipynb).)
 
-<img alt="Scatter Plot of Log Token Frequency vs. the Token Frequency Feature Values for GPT 2 - Small" src="img/scatter_plot.png" style="max-width:500px;"/>
+<img alt="Scatter Plot of Log Token Frequency vs. the Token Frequency Feature Values for GPT 2 - Small" src="img/scatter_plot.png" style="width: 500px;"/>
 
 Interestingly, we see high correlations for both model embeddings and unembeddings.  In some cases, we even observe that the embedding correlation is stronger than the unembedding correlation, despite initially expecting the feature to be stronger in unembeddings.
 
