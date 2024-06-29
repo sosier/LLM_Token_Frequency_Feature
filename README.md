@@ -23,7 +23,7 @@ I use [Olah et al.'s](https://distill.pub/2020/circuits/zoom-in/#claim-1) defini
  2. Load the model's tokenizer
  3. Tokenize the dataset and count the frequency of each token in the tokenizer's vocabulary. The end result should be a vector of length $V$ (the size of the vocabulary) with the counts ordered by token ID
  4. (Optional) Because steps 1-3 can be slow, save the resulting counts somewhere for future use
-    - Saved counts for all the models I studied can be found [here](token_counts/)
+    - Saved counts for all the models I studied as well as code to do OpenWebText token counting can be found [here](token_counts/)
  5. Load the embedding to be analyzed. This should be a matrix of size $V \times D$ where $D$ is the dimensionality of the embedding
     - Note: It may be necessary to transpose the matrix if it's an unembedding and is of shape $D \times V$
  6. Calculate all $D$ [principal components](https://en.wikipedia.org/wiki/Principal_component_analysis) of the embedding matrix
