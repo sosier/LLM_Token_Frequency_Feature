@@ -35,15 +35,17 @@ I use [Olah et al.'s](https://distill.pub/2020/circuits/zoom-in/#claim-1) defini
  9.  Run one final linear probe now using all the principal components kept during step 8 vs. $\log_{10}(\text{token\_count} + 1)$ and save the final regression weights for each
  10. Finally, if you want the actual feature vector, you can simply calculate a weighted sum the principal components from step 6 using the weights from step 9 and (optionally) normalize
 
-Code for this process can be found here: [COMING SOON]()
+Code for this process can be found [here](find_feature.py).
+
+The final feature vectors for all models studied can be found [here](feature_vectors/).
 
 ## Results
 
-I was able to find this feature in 20 different models: 18 popular open source LLMs and their variants plus two smaller, GPT-style models trained on a fully known training dataset for validation. This includes a variety of different model sizes (from 10M to 70B parameters), both base models and instruction tuned models, and even code models. The results are summarized in the table below:
+I was able to find the feature in 20 different models: 18 popular open source LLMs and their variants plus two smaller, GPT-style models trained on a fully known training dataset for validation. This includes a variety of different model sizes (from 10M to 70B parameters), both base models and instruction tuned models, and even code models. The results are summarized in the table below:
 
 <img alt="Results Table" src="img/results_table.png" style="max-width:800px;"/>
 
-You'll notice the feature correlates very strongly with the log token frequency (typically ~0.9). For visualization purposes, here's what that looks like for one specific model (GPT 2 - Small) on a scatter plot:
+You'll notice the feature correlates very strongly with the log token frequency (typically ~0.9). For visualization purposes, here's what that looks like for one specific model (GPT 2 - Small) on a scatter plot. (Scatter plots for all other models plus code to replicate the results can be found [here](Find_Token_Frequency_Feature.ipynb).)
 
 <img alt="Scatter Plot of Log Token Frequency vs. the Token Frequency Feature Values for GPT 2 - Small" src="img/scatter_plot.png" style="max-width:500px;"/>
 
@@ -89,4 +91,4 @@ In fact, if the bigram statistic theory is correct and universal, that could exp
 
 ## Acknowledgements
 
-Whatever your opinion of open source LLMs, I have to express my gratitude to all the companies who made their models open source (OpenAI, Meta, Mistral, Google, and Microsoft). This work would have been impossible otherwise as I definitely don't have the means to train any of these models myself! I also want to thank Hugging Face for hosting the models and providing helpful code for pulling and interacting with them, and of course Andrej Karpathy for building and sharing his nanoGPT repo.
+I have to express my gratitude to all the companies who made their models open source (OpenAI, Meta, Mistral, Google, and Microsoft). This work would have been impossible otherwise as I definitely don't have the means to train any of these models myself! I also want to thank Hugging Face for hosting the models and providing helpful code for pulling / interacting with them, and of course Andrej Karpathy for building and sharing his [nanoGPT repo](https://github.com/karpathy/nanoGPT/tree/master).
