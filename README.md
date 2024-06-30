@@ -51,7 +51,7 @@ Interestingly, we see high correlations for both model embeddings and unembeddin
 
 The weakest correlations were observed for the CodeGemma models. My hypothesis for this is that, being code models, the data they were trained on differs more substantially from our proxy dataset (OpenWebText) than it did for the other, more standard text models. I believe this is also the case for the regular Gemma models to a lesser extent, due to more of their training data being non-English text. (OpenWebText filters out non-English webpages.)
 
-All that said, the only way to truly confirm the feature measures training data token frequency is to use a model's actual training data instead of a proxy. As such, I trained two small character-level language models on the works of Shakespeare using Andrej Karpathy's [nanoGPT repo](https://github.com/karpathy/nanoGPT/tree/master). I trained one version with tied weights (in true GPT fashion) and one without. This experiment yielded this single highest correlation observed across the models investigated, generally confirming that yes, the feature actually measures training data token frequency.
+All that said, the only way to truly confirm the feature measures training data token frequency is to use a model's actual training data instead of a proxy. As such, I trained two small character-level language models on the works of Shakespeare using Andrej Karpathy's [nanoGPT repo](https://github.com/karpathy/nanoGPT/tree/master). I trained one version with tied weights (in true GPT fashion) and one without. This experiment yielded the single highest correlation observed across the models investigated, generally confirming that yes, the feature actually measures training data token frequency.
 
 ## Possible Uses
 
