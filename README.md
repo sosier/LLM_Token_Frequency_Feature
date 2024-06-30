@@ -89,4 +89,4 @@ In fact, if the bigram statistic theory is correct and universal, that could exp
 
 ## Acknowledgements
 
-I have to express my gratitude to all the companies who made their models open source (OpenAI, Meta, Mistral, Google, and Microsoft). This work would have been impossible otherwise as I definitely don't have the means to train any of these models myself! I also want to thank Hugging Face for hosting the models and providing helpful code for pulling / interacting with them, and of course Andrej Karpathy for building and sharing his [nanoGPT repo](https://github.com/karpathy/nanoGPT/tree/master).
+I want to express my gratitude to all the companies who made their models open source (OpenAI, Meta, Mistral, Google, and Microsoft). This work would have been impossible otherwise as I definitely don't have the means to train any of these models myself! I also want to thank Hugging Face for hosting the models and providing helpful code for pulling / interacting with them, and of course Andrej Karpathy for building and sharing his [nanoGPT repo](https://github.com/karpathy/nanoGPT/tree/master).
