@@ -61,7 +61,7 @@ I also explored a couple possible uses for this feature, beyond improving model 
 
 One use for this feature is as a way to identify candidate "glitch tokens" a la the infamous [SolidGoldMagikarp](https://www.alignmentforum.org/posts/aPeJE8bSo6rAFoLqg/solidgoldmagikarp-plus-prompt-generation) token. Indeed, one leading hypothesis for the existence of these tokens is that they're tokens that appear in a model's tokenizer but never (or only very rarely) appear in the model's actual training data. As such, this is an extremely natural use for this feature.
 
-While I haven't fully investigated this, initial inspection suggests the tokens scored as least frequent by the feature align well with the list of anomalous tokens shared in [SolidGoldMagikarp II: technical details and more recent findings](https://www.alignmentforum.org/posts/Ya9LzwEbfaAMY8ABo/solidgoldmagikarp-ii-technical-details-and-more-recent).
+While I haven't conducted a thorough review, initial inspection suggests the tokens scored as least frequent by the feature align well with the list of anomalous tokens shared in [SolidGoldMagikarp II: technical details and more recent findings](https://www.alignmentforum.org/posts/Ya9LzwEbfaAMY8ABo/solidgoldmagikarp-ii-technical-details-and-more-recent).
 
 <img alt="Identifying Glitch Tokens" src="img/glitch_tokens.png" style="max-width:800px;"/>
 
@@ -71,7 +71,7 @@ I also performed some initial exploration on how this feature could potentially 
 
 One important observation from this exercise was that it required very large / small steering vectors (i.e. very large / small values of $c$) to change model outputs. Indeed, at its most extreme it typically required $|c| > 1000$ to push models outputs to the extremes of the feature: always outputting the most or least frequent token according to the feature. With other, unrelated features this can typically be done with much lower values $c$, e.g. $|c| > 100$ or even less. This suggests the model pays relatively little attention to this feature. Ultimately, because of this, **I don't believe it's a strong target for activation steering efforts.**
 
-Nevertheless, the activation steering did have the effect you might anticipate of pushing the model to use more common / rare tokens. This is demonstrated in the activation steering example pictured below where you can see we push the model toward more rare first tokens with negative values of $c$ and toward more common with higher values of of $c$. 
+Nevertheless, the activation steering did have the effect you might anticipate of pushing the model to use more common / rare tokens. This is demonstrated in the activation steering example pictured below. In this example, the default first token output is " Paris", but by pushing the feature in an increasingly negative direction (i.e. more negative values of $c$) we're eventually able to force it to output the rarer `" Cologne"` token. Conversely, we can also push it in the other more positive direction to force it to output first the `" London"` and then the `" New"` token instead, both of which are more common tokens. 
 
 <img alt="Activation Steering" src="img/activation_steering.png" style="max-width:800px;"/>
 
@@ -85,7 +85,7 @@ Obviously, this is not a _surprising_ feature. It definitely seems like a featur
 
 Given this, a natural next project, building off this one, would be to try to demonstrate the universality of a "feature" for token bigram statistics. The theory from [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html#zero-layer-transformers) suggests this should be related to the product of embedding and unembedding matrices, but to my knowledge this hasn't yet been empirically demonstrated as universal in LLMs.
 
-In fact, if the bigram statistic theory is correct and universal, that could explain why GPT 2 - Small was relatively insensitive to my attempts to steer it using the token frequency feature. Specifically, my current hypothesis is that the feature is important to the model not for providing some sort of baseline prior on the output tokens, but rather as a feature the model uses to learn / store bigram statistics (which ultimately become a better prior it can use / update).
+In fact, if the bigram statistic theory is correct and universal, that could explain why GPT 2 - Small was relatively insensitive to my attempts to steer it using the token frequency feature. Specifically, my current hypothesis is that the feature exists and is important to the model not for providing some sort of baseline prior on the output tokens, but rather as a feature the model uses to learn / store bigram statistics (which ultimately become a better prior it can use / update).
 
 ## Acknowledgements
 
